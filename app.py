@@ -6,7 +6,8 @@ from flask import Flask, jsonify, render_template, request, send_from_directory,
 from ltx_core.loader import LTXV_LORA_COMFY_RENAMING_MAP, LoraPathStrengthAndSDOps
 from ltx_core.model.video_vae import get_video_chunks_number
 from ltx_pipelines.ti2vid_two_stages import TI2VidTwoStagesPipeline
-from ltx_pipelines.utils.media_io import AUDIO_SAMPLE_RATE, encode_video
+from ltx_pipelines.utils.constants import AUDIO_SAMPLE_RATE
+from ltx_pipelines.utils.media_io import encode_video
 
 app = Flask(__name__)
 OUTPUT_DIR = Path(os.environ.get("LTX_OUTPUT_DIR", "/outputs"))
