@@ -4,7 +4,9 @@ from pathlib import Path
 
 from flask import Flask, jsonify, render_template, request, send_from_directory, url_for
 from ltx_core.loader import LTXV_LORA_COMFY_RENAMING_MAP, LoraPathStrengthAndSDOps
+from ltx_core.model.video_vae import get_video_chunks_number
 from ltx_pipelines.ti2vid_two_stages import TI2VidTwoStagesPipeline
+from ltx_pipelines.utils.media_io import AUDIO_SAMPLE_RATE, encode_video
 
 app = Flask(__name__)
 OUTPUT_DIR = Path(os.environ.get("LTX_OUTPUT_DIR", "/outputs"))
@@ -90,9 +92,11 @@ def generate() -> tuple[dict, int] | tuple[str, int]:
 
     try:
         pipeline = _get_pipeline()
-        pipeline(
+        tiling_config = None
+        video_chunks_number = get_video_chunks_number(num_frames, tiling_config)
+        video, audio = pipeline(
             prompt=prompt,
-            output_path=str(output_path),
+            negative_prompt=str(payload.get("negative_prompt", "")),
             seed=int(payload.get("seed", 42)),
             height=height,
             width=width,
@@ -100,6 +104,16 @@ def generate() -> tuple[dict, int] | tuple[str, int]:
             frame_rate=float(fps),
             num_inference_steps=int(payload.get("num_inference_steps", 40)),
             cfg_guidance_scale=float(payload.get("cfg_guidance_scale", 3.0)),
+            images=[],
+            tiling_config=tiling_config,
+        )
+        encode_video(
+            video=video,
+            fps=float(fps),
+            audio=audio,
+            audio_sample_rate=AUDIO_SAMPLE_RATE,
+            output_path=str(output_path),
+            video_chunks_number=video_chunks_number,
         )
     except Exception as exc:  # noqa: BLE001
         return jsonify({"error": str(exc)}), 500
