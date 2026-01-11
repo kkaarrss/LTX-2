@@ -36,7 +36,7 @@
 
           <div class="panel-block">
             <label class="label">Model</label>
-            <select class="select">
+            <select class="select" id="model">
               <option>Fast</option>
               <option>Standard</option>
               <option>High Quality</option>
@@ -46,7 +46,7 @@
           <div class="panel-grid">
             <div class="panel-block">
               <label class="label">Duration</label>
-              <select class="select">
+              <select class="select" id="duration">
                 <option>6 sec</option>
                 <option>10 sec</option>
                 <option>16 sec</option>
@@ -54,7 +54,7 @@
             </div>
             <div class="panel-block">
               <label class="label">Resolution</label>
-              <select class="select">
+              <select class="select" id="resolution">
                 <option>1080p</option>
                 <option>720p</option>
                 <option>540p</option>
@@ -62,7 +62,7 @@
             </div>
             <div class="panel-block">
               <label class="label">FPS</label>
-              <select class="select">
+              <select class="select" id="fps">
                 <option>25</option>
                 <option>30</option>
                 <option>60</option>
@@ -76,14 +76,14 @@
                 <label class="label">Audio</label>
                 <span class="pill">Preview</span>
               </div>
-              <select class="select">
+              <select class="select" id="audio">
                 <option>On</option>
                 <option>Off</option>
               </select>
             </div>
             <div class="panel-block">
               <label class="label">Camera Motion</label>
-              <select class="select">
+              <select class="select" id="camera-motion">
                 <option>None</option>
                 <option>Pan</option>
                 <option>Orbit</option>
@@ -92,8 +92,8 @@
           </div>
 
           <div class="panel-actions">
-            <button class="ghost-button">Clear all</button>
-            <button class="primary-button">✨ Generate video</button>
+            <button class="ghost-button" id="clear-form">Clear all</button>
+            <button class="primary-button" id="generate">✨ Generate video</button>
           </div>
         </section>
 
@@ -101,10 +101,11 @@
           <div class="panel-block result-block">
             <label class="label">Result</label>
             <div class="result-frame">
-              <div class="result-message">
-                <p>Something went wrong. Please try again</p>
-                <button class="secondary-button">⟳ Retry</button>
+              <div class="result-message" id="result-message">
+                <p>Ready to generate. Configure your prompt and settings.</p>
+                <button class="secondary-button" id="retry">⟳ Retry</button>
               </div>
+              <video id="result-video" class="result-video" controls hidden></video>
             </div>
           </div>
         </section>
