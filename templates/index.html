@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LTX-2 API Playground</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-title">API Playground</span>
+          <span class="brand-subtitle">Text to Video</span>
+        </div>
+        <div class="topbar-right">
+          <span class="credits">20% Credits</span>
+          <button class="ghost-button">Get API Key</button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="panel left">
+          <div class="panel-block">
+            <label class="label">Prompt</label>
+            <textarea
+              id="prompt"
+              class="textarea"
+              placeholder="Describe the scene you want to generate."
+            ></textarea>
+            <div class="hint-row">
+              <span>Longer, detailed prompts lead to better, more accurate results.</span>
+              <span id="char-count">0/5000</span>
+            </div>
+          </div>
+
+          <div class="panel-block">
+            <label class="label">Model</label>
+            <select class="select" id="model">
+              <option>Fast</option>
+              <option>Standard</option>
+              <option>High Quality</option>
+            </select>
+          </div>
+
+          <div class="panel-grid">
+            <div class="panel-block">
+              <label class="label">Duration</label>
+              <select class="select" id="duration">
+                <option>6 sec</option>
+                <option>10 sec</option>
+                <option>16 sec</option>
+              </select>
+            </div>
+            <div class="panel-block">
+              <label class="label">Resolution</label>
+              <select class="select" id="resolution">
+                <option>1080p</option>
+                <option>720p</option>
+                <option>540p</option>
+              </select>
+            </div>
+            <div class="panel-block">
+              <label class="label">FPS</label>
+              <select class="select" id="fps">
+                <option>25</option>
+                <option>30</option>
+                <option>60</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="panel-grid two-cols">
+            <div class="panel-block">
+              <div class="label-row">
+                <label class="label">Audio</label>
+                <span class="pill">Preview</span>
+              </div>
+              <select class="select" id="audio">
+                <option>On</option>
+                <option>Off</option>
+              </select>
+            </div>
+            <div class="panel-block">
+              <label class="label">Camera Motion</label>
+              <select class="select" id="camera-motion">
+                <option>None</option>
+                <option>Pan</option>
+                <option>Orbit</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="panel-actions">
+            <button class="ghost-button" id="clear-form">Clear all</button>
+            <button class="primary-button" id="generate">✨ Generate video</button>
+          </div>
+        </section>
+
+        <section class="panel right">
+          <div class="panel-block result-block">
+            <label class="label">Result</label>
+            <div class="result-frame">
+              <div class="result-message" id="result-message">
+                <p>Ready to generate. Configure your prompt and settings.</p>
+                <button class="secondary-button" id="retry">⟳ Retry</button>
+              </div>
+              <video id="result-video" class="result-video" controls hidden></video>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <section class="history">
+        <h2>Generation history</h2>
+        <div class="history-grid">
+          <div class="history-card">
+            <div class="history-thumb history-thumb-1">
+              <span class="watermark">LTX-2</span>
+            </div>
+          </div>
+          <div class="history-card">
+            <div class="history-thumb history-thumb-2">
+              <span class="watermark">LTX-2</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>
