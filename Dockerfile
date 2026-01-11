@@ -19,4 +19,7 @@ COPY static ./static
 
 EXPOSE 8000
 
-CMD ["gunicorn", "-b", "0.0.0.0:8000", "app:app"]
+ENV GUNICORN_WORKERS=1 \
+    GUNICORN_TIMEOUT=0
+
+CMD ["sh", "-c", "gunicorn -b 0.0.0.0:8000 --workers ${GUNICORN_WORKERS} --timeout ${GUNICORN_TIMEOUT} app:app"]

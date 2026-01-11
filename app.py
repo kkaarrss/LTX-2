@@ -54,8 +54,10 @@ def _get_pipeline() -> TI2VidTwoStagesPipeline:
         checkpoint_path = _require_env("LTX_CHECKPOINT_PATH")
         gemma_root = _require_env("LTX_GEMMA_ROOT")
         upsampler_path = _require_env("LTX_UPSAMPLER_PATH")
+        device = os.environ.get("LTX_DEVICE", "cuda")
         lora_path = os.environ.get("LTX_DISTILLED_LORA_PATH")
         lora_strength = float(os.environ.get("LTX_DISTILLED_LORA_STRENGTH", "0.6"))
+        fp8transformer = os.environ.get("LTX_FP8_TRANSFORMER", "false").lower() in {"1", "true", "yes"}
         distilled_lora = []
         if lora_path:
             distilled_lora.append(
@@ -71,6 +73,8 @@ def _get_pipeline() -> TI2VidTwoStagesPipeline:
             spatial_upsampler_path=upsampler_path,
             gemma_root=gemma_root,
             loras=[],
+            device=device,
+            fp8transformer=fp8transformer,
         )
     return _PIPELINE
 
