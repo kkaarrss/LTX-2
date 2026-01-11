@@ -23,16 +23,21 @@ def _require_env(name: str) -> str:
     return value
 
 
+def _round_to_multiple(value: int, multiple: int) -> int:
+    return ((value + multiple - 1) // multiple) * multiple
+
+
 def _resolution_to_size(label: str) -> tuple[int, int]:
     match label:
         case "1080p":
-            return 1920, 1080
+            width, height = 1920, 1080
         case "720p":
-            return 1280, 720
+            width, height = 1280, 720
         case "540p":
-            return 960, 540
+            width, height = 960, 540
         case _:
-            return 1280, 720
+            width, height = 1280, 720
+    return _round_to_multiple(width, 64), _round_to_multiple(height, 64)
 
 
 def _frames_for_duration(duration_seconds: int, fps: int) -> int:
