@@ -1,7 +1,9 @@
+--index-url https://download.pytorch.org/whl/cu124
+
 Flask==3.0.3
 gunicorn==22.0.0
 torch~=2.7
-torchaudio
+torchaudio~=2.7
 einops
 numpy
 transformers
